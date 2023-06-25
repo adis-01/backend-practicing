@@ -1,5 +1,6 @@
 ﻿using practice.Model;
 using practice.Services.Database;
+using practice.Services.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,10 @@ namespace practice.Services
 {
     public interface IPriceService
     {
-        IList<Price> Get();
-        Price GetById (int id);
+        Task<IList<MPrice>> Get();
+        public Task<MPrice> GetByIdOptional (int? id);
+        public Task<MPrice> Insert(PricePostReq req);
+        public Task<MPrice> GetByIdPrice(int id);
+        public Task<MPrice> Update(int id, PriceUpdateReq req);
     }
 }

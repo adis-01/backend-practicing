@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(IKorisnikService));
 builder.Services.AddTransient<IPriceService,PriceService>();
 builder.Services.AddTransient<IKorisnikService,KorisnikService>();
+builder.Services.AddTransient<IUlogeService,UlogeService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<PracticeContext>(options=>options.UseSqlServer(connectionString));

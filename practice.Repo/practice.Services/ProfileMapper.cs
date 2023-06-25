@@ -17,6 +17,10 @@ namespace practice.Services
             CreateMap<Korisnici, MKorisnici>();
             CreateMap<KorisniciPostReq, Korisnici>();
             CreateMap<KorisniciUpdateReq,Korisnici>();
+            CreateMap<Price, MPrice>();
+            CreateMap<PricePostReq, Price>();
+            CreateMap<Uloge,MUloge>();
+            CreateMap<PriceUpdateReq, Price>();
         }
     }
 }
