@@ -1,4 +1,5 @@
 ﻿using practice.Model;
+using practice.Services.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace practice.Services
 {
-    public interface IProizvodiService
+    public interface IPriceService
     {
-        IList<Proizvodi> Get();
+        IList<Price> Get();
+        Price GetById (int id);
     }
 }

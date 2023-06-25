@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using practice.Services;
+using practice.Services.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +10,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IProizvodiService,ProizvodiService>();
+builder.Services.AddAutoMapper(typeof(IKorisnikService));
+builder.Services.AddTransient<IPriceService,PriceService>();
+builder.Services.AddTransient<IKorisnikService,KorisnikService>();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<PracticeContext>(options=>options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
