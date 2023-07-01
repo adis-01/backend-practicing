@@ -4,6 +4,7 @@ using practice.Services;
 using practice.Services.Data;
 using practice.Services.Database;
 using practice.Services.Requests;
+using practice.Services.SearchObjects;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,11 +14,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddAutoMapper(typeof(IKorisnikService));
-builder.Services.AddTransient<IPriceService,PriceService>();
+builder.Services.AddAutoMapper(typeof(ProfileMapper));
 builder.Services.AddTransient<IKorisnikService,KorisnikService>();
 builder.Services.AddTransient<IUlogeService,UlogeService>();
-builder.Services.AddTransient<IBService<MKorisnici>,BaseService<MKorisnici,Korisnici>>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<PracticeContext>(options=>options.UseSqlServer(connectionString));

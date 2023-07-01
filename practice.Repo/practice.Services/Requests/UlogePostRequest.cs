@@ -7,19 +7,13 @@ using System.Threading.Tasks;
 
 namespace practice.Services.Requests
 {
-    public class PricePostReq
+    public class UlogePostRequest
     {
         [Required]
         [MinLength(5)]
         [MaxLength(20)]
-        public string Naslov { get; set; } = null!;
+        public string NazivUloge { get; set; } = null!;
 
-        public string? Opis { get; set; }
-
-        public int? NovcaniCilj { get; set; }
-
-        public bool Aktivna { get; set; }
-
-        public int KorisnikId { get; set; }
+        public string? OpisUloge { get; set; }
     }
 }

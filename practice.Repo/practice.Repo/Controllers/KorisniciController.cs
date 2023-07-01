@@ -4,44 +4,13 @@ using practice.Services;
 using practice.Services.Data;
 using practice.Services.Database;
 using practice.Services.Requests;
+using practice.Services.SearchObjects;
 
 namespace practice.Repo.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class KorisniciController : ControllerBase
+    public class KorisniciController : BaseController<MKorisnici, KorisniciSearchObject,KorisniciPostReq,KorisniciUpdateReq>
     {
-        private readonly IKorisnikService _korisnikService;
-        private readonly PracticeContext _practice;
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public KorisniciController(ILogger<WeatherForecastController> logger, IKorisnikService korisnikService)
-        {
-            _logger = logger;
-            _korisnikService = korisnikService;
-        }
-
-        [HttpGet]
-        public IEnumerable<MKorisnici> Get() {
-            return _korisnikService.Get();
-        }
-
-        [HttpPost]
-        public MKorisnici Insert(KorisniciPostReq req)
-        {
-            return _korisnikService.Insert(req);
-        }
-
-        [HttpPut("{id}")]
-        public MKorisnici Update(int id,KorisniciUpdateReq req)
-        {
-            return _korisnikService.Update(id,req);
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(int id) {
-            _korisnikService.Delete(id);
-        }
 
 
         //[HttpGet("id")]
@@ -49,5 +18,8 @@ namespace practice.Repo.Controllers
         //{
         //    return _korisnikService.GetById(id);
         //}
+        public KorisniciController(IKorisnikService service) : base(service)
+        {
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using practice.Model;
-using practice.Services.Database;
+using practice.Services.Requests;
+using practice.Services.SearchObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace practice.Services
 {
-    public interface IUlogeService
+    public interface IUlogeService : IBService<MUloge,KorisniciSearchObject,UlogePostRequest,object>
     {
-        public IList<MUloge> GetUloge();
-        public MUloge GetUlogaById(int id);
     }
 }

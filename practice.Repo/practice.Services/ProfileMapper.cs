@@ -21,6 +21,7 @@ namespace practice.Services
             CreateMap<PricePostReq, Price>();
             CreateMap<Uloge,MUloge>();
             CreateMap<PriceUpdateReq, Price>();
+            CreateMap<UlogePostRequest,Uloge>();
         }
     }
 }

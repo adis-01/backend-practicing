@@ -4,32 +4,24 @@ using practice.Services;
 using practice.Services.Data;
 using practice.Services.Database;
 using practice.Services.Requests;
+using practice.Services.SearchObjects;
 
 namespace practice.Repo.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class UlogeController : ControllerBase
+    public class UlogeController : BaseController<MUloge,KorisniciSearchObject,UlogePostRequest,object>
     {
-        private readonly IUlogeService _ulogeService;
-        private readonly ILogger<WeatherForecastController> _logger;
 
-        public UlogeController(ILogger<WeatherForecastController> logger, IUlogeService ulogeService)
+        
+        //[HttpGet("id")]
+        //public Korisnici GetById(int id)
+        //{
+        //    return _korisnikService.GetById(id);
+        //}
+        public UlogeController(IUlogeService service) : base(service)
         {
-            _logger = logger;
-            _ulogeService = ulogeService;
+            
         }
-
-        [HttpGet()]
-        public IList<MUloge> GetAll()
-        {
-            return _ulogeService.GetUloge();
-        }
-
-        [HttpGet("{id}")]
-        public MUloge GetByID(int id)
-        {
-            return _ulogeService.GetUlogaById(id);
-        }
+        
     }
 }
