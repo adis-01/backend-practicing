@@ -11,5 +11,6 @@ namespace practice.Services
 {
     public interface IKorisnikService : IBService<MKorisnici, KorisniciSearchObject, KorisniciPostReq, KorisniciUpdateReq> 
     {
+        public Task<MKorisnici> Login(string username, string password);
     }
 }

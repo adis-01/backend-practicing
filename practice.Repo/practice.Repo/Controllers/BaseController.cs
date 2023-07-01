@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using practice.Services;
@@ -6,6 +7,7 @@ using practice.Services;
 namespace practice.Repo.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles ="Korisnik")]
     public class BaseController<T,TS,TInsert,TUpdate> : ControllerBase where TS : class where TInsert : class where TUpdate : class
     {
         private readonly IBService<T,TS,TInsert,TUpdate> _service;

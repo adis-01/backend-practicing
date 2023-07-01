@@ -24,6 +24,8 @@ namespace practice.Services
         {
             var query = _context.Set<TDb>().AsQueryable();
 
+            query = AddInclude(query);
+
             query = AddFilter(query, search);
             
             query = query.Take(search.PageSize).Skip((search.PageNumber - 1)*search.PageSize);
@@ -32,6 +34,11 @@ namespace practice.Services
             var lista = await query.ToListAsync();
 
             return _mapper.Map<IList<T>>(lista);
+        }
+
+        public virtual IQueryable<TDb> AddInclude(IQueryable<TDb> query)
+        {
+            return query;
         }
 
         public virtual IQueryable<TDb> AddFilter(IQueryable<TDb> query, TS search = null)

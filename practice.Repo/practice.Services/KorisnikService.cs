@@ -37,5 +37,25 @@ namespace practice.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<MKorisnici>(korisnik);
         }
+        public override  IQueryable<Korisnici> AddInclude(IQueryable<Korisnici> query)
+        {
+            return query.Include("KorisniciUloges.Uloga");
+        }
+
+        public async Task<MKorisnici> Login(string username, string password)
+        {
+            var korisnik = await _context.Korisnicis.Include("KorisniciUloges.Uloga").FirstOrDefaultAsync(x=>x.KorisnickoIme==username);
+
+            if (korisnik == null)
+                return null;
+
+            var hash = Generator.GenerateHash(korisnik.LozinkaSalt, password);
+
+            if (korisnik.LozinkaHash != hash)
+            {
+                return null;
+            }
+           return _mapper.Map<MKorisnici>(korisnik);
+        }
     }
 }

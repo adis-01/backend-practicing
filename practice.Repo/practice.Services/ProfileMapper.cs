@@ -22,6 +22,7 @@ namespace practice.Services
             CreateMap<Uloge,MUloge>();
             CreateMap<PriceUpdateReq, Price>();
             CreateMap<UlogePostRequest,Uloge>();
+            CreateMap<KorisniciUloge, MKorisniciUloge>();
         }
     }
 }
