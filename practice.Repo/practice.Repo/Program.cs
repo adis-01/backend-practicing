@@ -35,9 +35,13 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+
 builder.Services.AddAutoMapper(typeof(ProfileMapper));
+
 builder.Services.AddTransient<IKorisnikService,KorisnikService>();
 builder.Services.AddTransient<IUlogeService,UlogeService>();
+builder.Services.AddTransient<IPriceService,PriceService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<PracticeContext>(options=>options.UseSqlServer(connectionString));

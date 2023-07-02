@@ -21,5 +21,7 @@ namespace practice.Services.Requests
         public bool Aktivna { get; set; }
 
         public int KorisnikId { get; set; }
+        [Required]
+        public string? slikaPrice { get; set; }
     }
 }
