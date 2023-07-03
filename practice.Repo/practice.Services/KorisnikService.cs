@@ -46,7 +46,7 @@ namespace practice.Services
         {
             var korisnik = await _context.Korisnicis.Include("KorisniciUloges.Uloga").FirstOrDefaultAsync(x=>x.KorisnickoIme==username);
 
-            if (korisnik == null)
+            if (korisnik == null || !korisnik.isActive)
                 return null;
 
             var hash = Generator.GenerateHash(korisnik.LozinkaSalt, password);

@@ -25,5 +25,7 @@ namespace practice.Services.Requests
         [Compare("Lozinka",ErrorMessage ="Lozinke se ne podudaraju")]
         public string LozinkaPonovo { get; set; } = null!;
         public bool Status { get; set; }
+        [Required,EmailAddress]
+        public string Email { get; set; }
     }
 }

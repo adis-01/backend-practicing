@@ -20,4 +20,6 @@ public partial class Korisnici
     public virtual ICollection<KorisniciUloge> KorisniciUloges { get; set; } = new List<KorisniciUloge>();
 
     public virtual ICollection<Price> Prices { get; set; } = new List<Price>();
+    public bool isActive { get; set; } = false;
+    public string Email { get; set; } = null!;
 }

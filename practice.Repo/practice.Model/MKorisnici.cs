@@ -14,6 +14,7 @@ namespace practice.Model
         public string LastName { get; set; } = null!;
 
         public string KorisnickoIme { get; set; } = null!;
+        public bool isActive { get; set; }
         public virtual ICollection<MKorisniciUloge> KorisniciUloges { get; set; } = new List<MKorisniciUloge>();
     }
 }

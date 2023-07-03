@@ -13,7 +13,7 @@ namespace practice.Repo.Controllers
     public class KorisniciController : BaseController<MKorisnici, KorisniciSearchObject,KorisniciPostReq,KorisniciUpdateReq>
     {
 
-
+        protected IKorisnikService _service;
         //[HttpGet("id")]
         //public Korisnici GetById(int id)
         //{
@@ -21,6 +21,9 @@ namespace practice.Repo.Controllers
         //}
         public KorisniciController(IKorisnikService service) : base(service)
         {
+            _service = service;
         }
+
+        
     }
 }

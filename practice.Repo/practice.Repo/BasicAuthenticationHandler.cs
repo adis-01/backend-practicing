@@ -34,6 +34,8 @@ namespace practice.Repo
 
             if (korisnik == null)
                 return AuthenticateResult.Fail("Username or password incorrect");
+
+          
             else
             {
                 var claims = new List<Claim>()
@@ -45,9 +47,9 @@ namespace practice.Repo
                 {
                     claims.Add(new Claim(ClaimTypes.Role, uloga.Uloga.NazivUloge));
                 }
-                var identity = new ClaimsIdentity(claims,Scheme.Name);
+                var identity = new ClaimsIdentity(claims, Scheme.Name);
                 var principal = new ClaimsPrincipal(identity);
-                var ticket = new AuthenticationTicket(principal,Scheme.Name);
+                var ticket = new AuthenticationTicket(principal, Scheme.Name);
                 return AuthenticateResult.Success(ticket);
             }
         }
