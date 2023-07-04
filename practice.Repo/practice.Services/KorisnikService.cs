@@ -35,10 +35,18 @@ namespace practice.Services
             korisnik.LozinkaHash = Generator.GenerateHash(korisnik.LozinkaSalt, req.Lozinka);
             await _context.AddAsync(korisnik);
             await _context.SaveChangesAsync();
+            var korisnikUloga = new KorisniciUloge()
+            {
+                KorisnikId=korisnik.KorisnikId,
+                UlogaId=2
+            };
+            await _context.KorisniciUloges.AddAsync(korisnikUloga);
+            await _context.SaveChangesAsync();
             return _mapper.Map<MKorisnici>(korisnik);
         }
         public override  IQueryable<Korisnici> AddInclude(IQueryable<Korisnici> query)
         {
+            EmailSender.SendEmail("p332jlkafs", "sipkovic.adis1@outlook.com", "Adis");
             return query.Include("KorisniciUloges.Uloga");
         }
 
@@ -46,7 +54,7 @@ namespace practice.Services
         {
             var korisnik = await _context.Korisnicis.Include("KorisniciUloges.Uloga").FirstOrDefaultAsync(x=>x.KorisnickoIme==username);
 
-            if (korisnik == null || !korisnik.isActive)
+            if (korisnik == null)
                 return null;
 
             var hash = Generator.GenerateHash(korisnik.LozinkaSalt, password);

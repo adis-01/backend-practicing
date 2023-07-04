@@ -23,7 +23,6 @@ namespace practice.Repo.Controllers
         {
             _service = service;
         }
-
         
     }
 }
