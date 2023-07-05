@@ -24,7 +24,7 @@ namespace practice.Services.Helpers
             message.Subject = "Email verification token - please verify";
             message.Body = new TextPart(TextFormat.Plain)
             {
-                Text = $"Hi, {name}"
+                Text = $"Hi, {name}. \n\n You are only a step closer - here is the verification token - {verificationToken}. \n\n Enter it so you can verify yourself. \n\n Thanks."
             };
             using var client = new SmtpClient();
             client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using practice.Services.Data;
 
@@ -11,9 +12,11 @@ using practice.Services.Data;
 namespace practice.Services.Migrations
 {
     [DbContext(typeof(PracticeContext))]
-    partial class PracticeContextModelSnapshot : ModelSnapshot
+    [Migration("20230704205328_AddedTokenMigration")]
+    partial class AddedTokenMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,10 +67,6 @@ namespace practice.Services.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("VerifikacijskiToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VerifikacijskiTokenSalt")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using practice.Services.Data;
+using practice.Services.Helpers;
 using practice.Services.SearchObjects;
 using System;
 using System.Collections.Generic;
@@ -20,8 +22,11 @@ namespace practice.Services
             _mapper=mapper;
         }
 
+       
+
         public async Task<IList<T>> GetAll(TS search = null)
         {
+           string token = Generator.GenerateToken(10);
             var query = _context.Set<TDb>().AsQueryable();
 
             query = AddInclude(query);

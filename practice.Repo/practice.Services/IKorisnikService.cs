@@ -1,4 +1,5 @@
-﻿using practice.Model;
+﻿using Microsoft.AspNetCore.Mvc;
+using practice.Model;
 using practice.Services.Requests;
 using practice.Services.SearchObjects;
 using System;
@@ -12,5 +13,6 @@ namespace practice.Services
     public interface IKorisnikService : IBService<MKorisnici, KorisniciSearchObject, KorisniciPostReq, KorisniciUpdateReq> 
     {
         public Task<MKorisnici> Login(string username, string password);
+        public Task<IActionResult> Verify(int id, string token);
     }
 }

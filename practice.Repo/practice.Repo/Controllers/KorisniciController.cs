@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using practice.Model;
 using practice.Services;
 using practice.Services.Data;
@@ -22,6 +23,12 @@ namespace practice.Repo.Controllers
         public KorisniciController(IKorisnikService service) : base(service)
         {
             _service = service;
+        }
+
+        [HttpPost("verify/{id}")]
+        public async Task<IActionResult> Verify(int id, string token)
+        {
+            return await _service.Verify(id, token);
         }
         
     }

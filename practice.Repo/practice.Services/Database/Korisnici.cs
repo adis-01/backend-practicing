@@ -21,5 +21,7 @@ public partial class Korisnici
 
     public virtual ICollection<Price> Prices { get; set; } = new List<Price>();
     public bool isActive { get; set; } = false;
+    public string VerifikacijskiToken { get; set; } = null!;
+    public string VerifikacijskiTokenSalt { get; set; } = null!;
     public string Email { get; set; } = null!;
 }

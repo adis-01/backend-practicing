@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using practice.Model;
 using practice.Services.Data;
@@ -33,20 +34,59 @@ namespace practice.Services
             _mapper.Map(req, korisnik);
             korisnik.LozinkaSalt = Generator.GenerateSalt();
             korisnik.LozinkaHash = Generator.GenerateHash(korisnik.LozinkaSalt, req.Lozinka);
+            GenerisiToken(korisnik);
             await _context.AddAsync(korisnik);
             await _context.SaveChangesAsync();
+            await dodajUlogu(korisnik);
+            return _mapper.Map<MKorisnici>(korisnik);
+        }
+
+        private string GenerisiToken(Korisnici korisnik)
+        {
+            var token = Generator.GenerateToken(10);
+            var tokenSalt = Generator.GenerateSalt();
+            korisnik.VerifikacijskiTokenSalt = tokenSalt;
+            korisnik.VerifikacijskiToken = Generator.GenerateHash(tokenSalt, token);
+            EmailSender.SendEmail(token, korisnik.Email, korisnik.FirstName);
+            return token.ToString();
+        }
+
+        public async Task<IActionResult> Verify(int korisnikID, string token)
+        {
+            var korisnik = await _context.Korisnicis.FindAsync(korisnikID);
+
+
+            if (korisnik == null)
+                return new BadRequestResult();
+
+            var Token = Generator.GenerateHash(korisnik.VerifikacijskiTokenSalt, token);
+
+            if (Token != korisnik.VerifikacijskiToken)
+                return new BadRequestResult();
+
+            korisnik.isActive = true;
+
+            await _context.SaveChangesAsync();
+
+            return new OkResult();
+
+        }
+
+        private async Task<bool> dodajUlogu(Korisnici korisnik)
+        {
             var korisnikUloga = new KorisniciUloge()
             {
-                KorisnikId=korisnik.KorisnikId,
-                UlogaId=2
+                KorisnikId = korisnik.KorisnikId,
+                UlogaId = 2
             };
             await _context.KorisniciUloges.AddAsync(korisnikUloga);
             await _context.SaveChangesAsync();
-            return _mapper.Map<MKorisnici>(korisnik);
+            return true;
         }
+
         public override  IQueryable<Korisnici> AddInclude(IQueryable<Korisnici> query)
         {
-            EmailSender.SendEmail("p332jlkafs", "sipkovic.adis1@outlook.com", "Adis");
+            //EmailSender.SendEmail("p332jlkafs", "sipkovic.adis1@outlook.com", "Adis");
             return query.Include("KorisniciUloges.Uloga");
         }
 
@@ -65,5 +105,6 @@ namespace practice.Services
             }
            return _mapper.Map<MKorisnici>(korisnik);
         }
+       
     }
 }

@@ -28,5 +28,23 @@ namespace practice.Services.Helpers
             return Convert.ToBase64String(inArray);
 
         }
+        public static string GenerateToken (int duzina)
+        {
+            const string znakovi = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            byte[] randomBytes = new byte[duzina];
+
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(randomBytes);
+            }
+
+            char[] chars = new char[duzina];
+            for (int i = 0; i < duzina; i++)
+            {
+                chars[i] = znakovi[randomBytes[i] % znakovi.Length];
+            }
+
+            return new string(chars);
+        }
     }
 }
