@@ -1,0 +1,84 @@
+version: '3'
+services:
+#mssql docker
+  practice-sql:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Test_123
+      - MSSQL_PID=Developer
+    ports:
+      - 1401:1433
+    expose:
+      - 1433
+    networks:
+      - practicenet
+
+  discoverhscountry-api:
+    restart: unless-stopped
+    build:
+      context: .
+    environment:
+      - ConnectionStrings:DefaultConnection=Server=practice-sql,1433;Database=practiceDB;User=sa;Password=Test_123;ConnectRetryCount=0; TrustServerCertificate=True; MultipleActiveResultSets=true
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - SMTP_SERVER=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USERNAME=cdiscoverhs@gmail.com
+      - SMTP_PASSWORD=ircrhnghicdszqqu
+      - API_HOST=192.168.31.123
+      - API_PORT=7125
+    ports:
+      - 7277:7277 
+    networks:
+      - practicenet
+    links:
+      - practice-sql
+    depends_on:
+      - practice-sql
+      
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - practicenet  
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      
+  rabbitmq-service:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./practice.RabbitMQConsumer/Dockerfile
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - SMTP_SERVER=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USERNAME=cdiscoverhs@gmail.com
+      - SMTP_PASSWORD=ircrhnghicdszqqu
+      - API_HOST=192.168.31.123
+      - API_PORT=7125
+    depends_on:
+      - rabbitmq
+    networks:
+      - practicenet
+      
+volumes:
+  rabbitmq_data:
+  
+networks:
+  practicenet:
+    driver: bridge      
